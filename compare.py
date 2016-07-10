@@ -11,17 +11,24 @@ def parse(file):
     f.close()
 
     stripped = []
+    skip = False
     for line in lines:
-        if line.startswith('Title:'):
-            stripped.append(line)
-        elif line.startswith('Username:'):
-            stripped.append(line)
-        elif line.startswith('Url:'):
-            stripped.append(line)
-        elif line.startswith('Comment:'):
-            stripped.append(line)
-        elif line.startswith('Password:'):
-            stripped.append(line)
+        if line.startswith('*** Group: Backup ***'):
+            skip = True
+        elif line.startswith('***'):
+            skip = False
+
+        if not skip:
+            if line.startswith('Title:'):
+                stripped.append(line)
+            elif line.startswith('Username:'):
+                stripped.append(line)
+            elif line.startswith('Url:'):
+                stripped.append(line)
+            elif line.startswith('Comment:'):
+                stripped.append(line)
+            elif line.startswith('Password:'):
+                stripped.append(line)
 
     groups = [group for group in zip(*(iter(stripped),) * 5)]
 
