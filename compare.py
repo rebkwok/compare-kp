@@ -66,9 +66,14 @@ def compare(file1, file2):
             )
         )
 
+    mismatch = False
     for item in present_in_both:
         if parsedfile1[item] != parsedfile2[item]:
             print('{} does not match'.format(item))
+            mismatch = True
+
+    if not missing_in_file1 and not missing_in_file2 and not mismatch:
+        print('Files match')
 
 if __name__ == '__main__':
     compare()
